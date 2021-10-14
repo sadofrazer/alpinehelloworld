@@ -1,7 +1,7 @@
 pipeline{
     environment{
         IMAGE_NAME = "sadofrazer/alpinehelloworld"
-        // IMAGE_TAG = "latest"
+        IMAGE_TAG = "latest"
         CONTAINER_NAME = "alpinehelloworld"
         STAGING = "ajc-staging"
         PRODUCTION = "ajc-production"
