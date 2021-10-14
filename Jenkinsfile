@@ -84,7 +84,7 @@ pipeline{
                 script{
                     sh'''
                        heroku container:login
-                       heroku create ${STAGING} || echo "project already exist"
+                       heroku create ${STAGING}
                        #Permet à Heroku de rebuilder l'application et de la pusher sur heroku
                        heroku container:push -a ${STAGING} web
                        #Heroku déploiera l'application dans l'environnement de staging
