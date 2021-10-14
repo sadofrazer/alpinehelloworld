@@ -20,22 +20,18 @@ pipeline{
             }
         }
 
-        try {
-
-            stage ('Clean Container') {
-               agent any
-                steps{
+        stage ('Try to clean Container') {
+            agent any
+            steps{
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     script{
                         sh'''
-                          docker stop ${CONTAINER_NAME}
-                          docker rm ${CONTAINER_NAME}
+                           docker stop ${CONTAINER_NAME}
+                           docker rm ${CONTAINER_NAME}
                         '''
                     }
                 }
             }
-
-        } catch (Exception e) {
-            echo "Stage failed, but we still continue"
         }
    
         stage ('Run container based on builded image') {
@@ -62,24 +58,19 @@ pipeline{
             }
         }
 
-        try {
-
-            stage ('Clean Container') {
-               agent any
-                steps{
+        stage ('Clean Container') {
+            agent any
+            steps{
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     script{
                         sh'''
-                          docker stop ${CONTAINER_NAME}
-                          docker rm ${CONTAINER_NAME}
+                           docker stop ${CONTAINER_NAME}
+                           docker rm ${CONTAINER_NAME}
                         '''
                     }
                 }
             }
-
-        } catch (Exception e) {
-            echo "Stage failed, but we still continue"
         }
-        
 
         stage ('push image and deploy it in staging env') {
             when{
