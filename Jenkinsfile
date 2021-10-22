@@ -39,9 +39,9 @@ pipeline{
             steps{
                 script{
                     sh'''
-                       docker run -d --name ${CONTAINER_NAME} -e PORT=5000 -p 80:5000 ${IMAGE_NAME}:${IMAGE_TAG}
+                       docker run -d --name ${CONTAINER_NAME} -e PORT=5000 -p 5000:5000 ${IMAGE_NAME}:${IMAGE_TAG}
                        sleep 5
-                       curl http://172.17.0.1 | grep -q "Hello world!"
+                       curl http://172.17.0.1:5000 | grep -q "Hello world!"
                     '''
                 }
             }
@@ -52,7 +52,7 @@ pipeline{
             steps{
                 script{
                     sh'''
-                       curl http://172.17.0.1 | grep -q "Hello world!"
+                       curl http://172.17.0.1:5000 | grep -q "Hello world!"
                     '''
                 }
             }
